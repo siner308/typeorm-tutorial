@@ -1,4 +1,4 @@
-import { Column, Entity, ManyToMany, PrimaryColumn, PrimaryGeneratedColumn } from 'typeorm';
+import { BaseEntity, Column, Entity, ManyToMany, PrimaryColumn, PrimaryGeneratedColumn } from 'typeorm';
 import { Restaurant } from './Restaurant';
 import { Brand } from './Brand';
 
@@ -7,9 +7,9 @@ interface HashtagProps {
 }
 
 @Entity('hashtag')
-export class Hashtag {
+export class Hashtag extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
-  id: string;
+  id?: string;
 
   @Column({ type: 'varchar', length: 100, unique: true })
   name: string;
@@ -19,8 +19,4 @@ export class Hashtag {
 
   @ManyToMany(() => Brand, (brand: Brand) => brand.hashtags)
   brands: Brand[];
-
-  constructor(props?: HashtagProps) {
-    this.name = props?.name;
-  }
 }

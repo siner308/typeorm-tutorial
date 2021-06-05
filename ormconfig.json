@@ -5,8 +5,8 @@
    "username": "root",
    "password": "password",
    "database": "typeorm_tutorial",
-   "synchronize": true,
-   "logging": false,
+   "synchronize": false,
+   "logging": true,
    "entities": [
       "src/entity/**/*.ts"
    ],

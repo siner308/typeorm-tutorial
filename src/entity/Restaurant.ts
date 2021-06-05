@@ -1,24 +1,31 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToMany, ManyToOne } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  ManyToMany,
+  ManyToOne,
+  BaseEntity,
+} from 'typeorm';
 import { Position } from './Position';
 import { Hashtag } from './Hashtag';
 import { Brand } from './Brand';
+import { JoinColumn } from 'typeorm';
 
-interface RestaurantProps {
-  position?: Position;
-  brand?: Brand;
-  name: string;
-}
 
 @Entity('restaurant')
-export class Restaurant {
+export class Restaurant extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
-  id: number;
+  id?: number;
 
   @Column(() => Position, { prefix: false })
   position: Position;
 
-  @ManyToOne(() => Brand, (brand: Brand) => brand.restaurants)
+  @ManyToOne(() => Brand, (brand: Brand) => brand.restaurants, { eager: true, cascade: true })
+  @JoinColumn({ name: 'brand_id', referencedColumnName: 'id' })
   brand: Brand;
+
+  @Column({ name: 'brand_id' })
+  brandId: string;
 
   @Column({ type: 'varchar', length: 150 })
   name: string;
@@ -26,9 +33,8 @@ export class Restaurant {
   @ManyToMany(() => Hashtag, (hashtag: Hashtag) => hashtag.restaurants, { eager: true })
   hashtags: Hashtag[];
 
-  constructor(props?: RestaurantProps) {
-    this.brand = props?.brand;
-    this.position = props?.position;
-    this.name = props?.name;
+  async save(): Promise<this> {
+    this.brand = await this.brand.save();
+    return super.save();
   }
 }
