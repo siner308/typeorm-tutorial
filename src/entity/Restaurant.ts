@@ -14,7 +14,7 @@ export class Restaurant {
   @PrimaryGeneratedColumn('uuid')
   id: number;
 
-  @Column(() => Position)
+  @Column(() => Position, { prefix: false })
   position: Position;
 
   @ManyToOne(() => Brand, (brand: Brand) => brand.restaurants)

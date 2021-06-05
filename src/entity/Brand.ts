@@ -11,22 +11,22 @@ interface BrandProps {
 @Entity('brand')
 export class Brand {
   @PrimaryGeneratedColumn('uuid')
-  id: string
+  id: string;
 
   @Column('varchar', { length: 150 })
   name: string;
 
-  @Column(() => BrandOwner)
+  @Column(() => BrandOwner, { prefix: false })
   owner: BrandOwner;
 
   @ManyToMany(() => Hashtag, (hashtag: Hashtag) => hashtag.brands)
-  hashtags: Hashtag[]
+  hashtags: Hashtag[];
 
   @OneToMany(() => Restaurant, (restaurant: Restaurant) => restaurant.brand)
-  restaurants: Restaurant[]
+  restaurants: Restaurant[];
 
-  constructor(props: BrandProps) {
-    this.name = props.name;
-    this.owner = props.owner;
+  constructor(props?: BrandProps) {
+    this.name = props?.name;
+    this.owner = props?.owner;
   }
 }
