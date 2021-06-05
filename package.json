@@ -1,0 +1,32 @@
+{
+  "name": "typeorm-tutorial",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "migration:generate": "ts-node ./node_modules/typeorm/cli.js migration:generate -n",
+    "migration:run": "ts-node ./node_modules/typeorm/cli.js migration:run",
+    "migration:revert": "ts-node ./node_modules/typeorm/cli.js migration:revert"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/siner308/typeorm-tutorial.git"
+  },
+  "author": "siner308",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/siner308/typeorm-tutorial/issues"
+  },
+  "homepage": "https://github.com/siner308/typeorm-tutorial#readme",
+  "dependencies": {
+    "mysql2": "^2.2.5",
+    "reflect-metadata": "^0.1.13",
+    "typeorm": "^0.2.34",
+    "typescript": "^4.3.2"
+  },
+  "devDependencies": {
+    "@types/node": "^15.12.1",
+    "ts-node": "^10.0.0"
+  }
+}
