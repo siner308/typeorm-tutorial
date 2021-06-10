@@ -1,5 +1,5 @@
 import { Column } from 'typeorm';
-import { Brand } from './Brand';
+import { BaseEmbeddedEntity } from './base/BaseEmbeddedEntity';
 
 interface BrandOwnerProps {
   name?: string;
@@ -7,7 +7,7 @@ interface BrandOwnerProps {
   address?: string;
 }
 
-export class BrandOwner {
+export class BrandOwner extends BaseEmbeddedEntity<BrandOwnerProps> {
   @Column({ type: 'varchar', name: 'owner_name', length: 100 })
   name: string;
 
@@ -16,14 +16,4 @@ export class BrandOwner {
 
   @Column({ type: 'varchar', name: 'owner_address', length: 300 })
   address: string;
-
-  static create(props: BrandOwnerProps) {
-    return new BrandOwner(props);
-  }
-
-  constructor(props: BrandOwnerProps) {
-    this.name = props?.name;
-    this.telephone = props?.telephone;
-    this.address = props?.address;
-  }
 }

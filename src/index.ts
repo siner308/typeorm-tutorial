@@ -1,5 +1,5 @@
 import 'reflect-metadata';
-import { Connection, createConnection } from 'typeorm';
+import { createConnection } from 'typeorm';
 import { Restaurant } from './entity/Restaurant';
 import { Position } from './entity/Position';
 import { Brand } from './entity/Brand';
@@ -16,12 +16,12 @@ async function run() {
     telephone: '010-1234-1234',
     address: '아무시 아무구 아무동 아무아파트 아무동 아무호',
   });
-  const brand = Brand.create({ owner: brandOwner, name: '사이너떡볶이', hashtags: brandHashtags });
+  const brandInstance = Brand.create({ owner: brandOwner, name: '사이너떡볶이', hashtags: brandHashtags });
 
   const restaurantPosition = Position.create({ longitude: 127.39, latitude: 37.324 });
   const restaurant = Restaurant.create({
     position: restaurantPosition,
-    brand: brand,
+    brand: brandInstance,
     name: '사이너떡볶이 서울본점',
     hashtags: [ ...brandHashtags, locationHashtag ],
   });
@@ -37,6 +37,6 @@ async function run() {
 }
 
 (async () => {
-  const connection = await createConnection();
+  await createConnection();
   await run();
 })();
