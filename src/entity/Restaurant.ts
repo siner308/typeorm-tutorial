@@ -4,7 +4,7 @@ import {
   Column,
   ManyToMany,
   ManyToOne,
-  BaseEntity,
+  BaseEntity, JoinTable, CreateDateColumn, UpdateDateColumn, DeleteDateColumn,
 } from 'typeorm';
 import { Position } from './Position';
 import { Hashtag } from './Hashtag';
@@ -20,7 +20,7 @@ export class Restaurant extends BaseEntity {
   @Column(() => Position, { prefix: false })
   position: Position;
 
-  @ManyToOne(() => Brand, (brand: Brand) => brand.restaurants, { eager: true, cascade: true })
+  @ManyToOne(() => Brand, (brand: Brand) => brand.restaurants, { cascade: true })
   @JoinColumn({ name: 'brand_id', referencedColumnName: 'id' })
   brand: Brand;
 
@@ -30,11 +30,16 @@ export class Restaurant extends BaseEntity {
   @Column({ type: 'varchar', length: 150 })
   name: string;
 
-  @ManyToMany(() => Hashtag, (hashtag: Hashtag) => hashtag.restaurants, { eager: true })
+  @ManyToMany(() => Hashtag, (hashtag: Hashtag) => hashtag.restaurants)
+  @JoinTable()
   hashtags: Hashtag[];
 
-  async save(): Promise<this> {
-    this.brand = await this.brand.save();
-    return super.save();
-  }
+  @CreateDateColumn()
+  createdAt: Date;
+
+  @UpdateDateColumn()
+  updatedAt: Date;
+
+  @DeleteDateColumn()
+  deletedAt: Date;
 }

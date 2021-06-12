@@ -1,4 +1,12 @@
-import { BaseEntity, Column, Entity, ManyToMany, PrimaryColumn, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  BaseEntity,
+  Column,
+  CreateDateColumn, DeleteDateColumn,
+  Entity,
+  ManyToMany,
+  PrimaryColumn,
+  PrimaryGeneratedColumn, UpdateDateColumn,
+} from 'typeorm';
 import { Restaurant } from './Restaurant';
 import { Brand } from './Brand';
 
@@ -19,4 +27,13 @@ export class Hashtag extends BaseEntity {
 
   @ManyToMany(() => Brand, (brand: Brand) => brand.hashtags)
   brands: Brand[];
+
+  @CreateDateColumn()
+  createdAt: Date;
+
+  @UpdateDateColumn()
+  updatedAt: Date;
+
+  @DeleteDateColumn()
+  deletedAt: Date;
 }

@@ -1,4 +1,13 @@
-import { BaseEntity, Column, Entity, ManyToMany, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  BaseEntity,
+  Column,
+  CreateDateColumn, DeleteDateColumn,
+  Entity,
+  JoinTable,
+  ManyToMany,
+  OneToMany,
+  PrimaryGeneratedColumn, UpdateDateColumn,
+} from 'typeorm';
 import { Hashtag } from './Hashtag';
 import { Restaurant } from './Restaurant';
 import { BrandOwner } from './BrandOwner';
@@ -20,9 +29,19 @@ export class Brand extends BaseEntity {
   @Column(() => BrandOwner, { prefix: false })
   owner: BrandOwner;
 
-  @ManyToMany(() => Hashtag, (hashtag: Hashtag) => hashtag.brands, { eager: true })
+  @ManyToMany(() => Hashtag, (hashtag: Hashtag) => hashtag.brands)
+  @JoinTable()
   hashtags: Hashtag[];
 
   @OneToMany(() => Restaurant, (restaurant: Restaurant) => restaurant.brand)
   restaurants: Restaurant[];
+
+  @CreateDateColumn()
+  createdAt: Date;
+
+  @UpdateDateColumn()
+  updatedAt: Date;
+
+  @DeleteDateColumn()
+  deletedAt: Date;
 }
